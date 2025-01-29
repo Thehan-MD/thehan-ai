@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thehan.AI - Chatbot</title>
+</head>
+<body>
+    <h1>Thehan.AI - Chat with AI</h1>
+    <textarea id="message" placeholder="Type your message..."></textarea>
+    <button onclick="sendMessage()">Send</button>
+    <p id="response"></p>
+
+    <script>
+        async function sendMessage() {
+            let message = document.getElementById("message").value;
+            let response = await fetch("https://api.openai.com/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "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"
+                },
+                body: JSON.stringify({
+                    model: "gpt-3.5-turbo",
+                    messages: [{"role": "user", "content": message}]
+                })
+            });
+            let data = await response.json();
+            document.getElementById("response").innerText = "AI: " + data.choices[0].message.content;
+        }
+    </script>
+</body>
+</html>
